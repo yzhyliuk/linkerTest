@@ -32,7 +32,7 @@ func main() {
 	//adding serving static files
 	http.Handle("/public", http.FileServer(http.Dir("/public")))
 	//starting server
-	http.ListenAndServe(process.env.PORT, nil)
+	http.ListenAndServe(os.Getenv("PORT"), nil)
 }
 
 // GeneralHandler : our main handler function. If it recives an GET request - it's cheking http request url and returning home.html
