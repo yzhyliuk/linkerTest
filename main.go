@@ -22,7 +22,7 @@ func initDB()  {
 	checkErr(err)
 	defer db.Close()
 
-	_,err := db.Exec("CREATE TABLE links (url VARCHAR(1000), newurl VARCHAR(12) PRIMARY KEY)")
+	_, err = db.Exec("CREATE TABLE links (url VARCHAR(1000), newurl VARCHAR(12) PRIMARY KEY)")
 	checkErr(err)
 }
 
@@ -76,13 +76,13 @@ func addlink(url string) string {
 
 	var newRandomURL string
 	for fine := false; fine == false; {
-		newRandomURL = getRandomUrl()
-		_, err := db.Exec("INSERT INTO links VALUES($1,$2)", url, newRandomUrl)
+		newRandomURL = getRandomURL()
+		_, err := db.Exec("INSERT INTO links VALUES($1,$2)", url, newRandomURL)
 		if err == nil {
 			fine = true
 		}
 	}
-	return newRandomUrl
+	return newRandomURL
 }
 func getRandomURL() string {
 	const charArray = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
