@@ -63,7 +63,7 @@ func GeneralHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		newURL := addlink(linkURL)
-		const domain = "http://localhost:8080/"
+		const domain = "https://link-reducer-test.herokuapp.com/"
 		response := domain + newURL
 		fmt.Println(response)
 		w.Write([]byte(response))
