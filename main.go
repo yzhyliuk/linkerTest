@@ -28,7 +28,6 @@ func initDB()  {
 
 func main() {
 	//adding one general handler func, that will halndle all the requests
-	initDB()
 	http.HandleFunc("/", GeneralHandler)
 	//adding serving static files
 	http.Handle("/public", http.FileServer(http.Dir("/public")))
