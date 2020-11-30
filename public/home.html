@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>THE BEST SORTNER EVER MADE USING PURE GOLANG</title>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                text-align: center;
+                padding: 2vw;
+            }
+            input {
+                margin: 2vw 0;
+                width: 35vw;
+                height: 3vw;
+                outline: none;
+                padding: 0.2vw 1vw;
+                border: solid 1px gray;
+                border-radius: 0.2vw;
+                font-size: 1.2vw;
+            }
+            input[type=submit] {
+                cursor: pointer;
+                width: auto;
+                border: none;
+            }
+            input[type=submit]:hover {
+                background-color: rgb(202, 202, 202);
+            }
+            .result {
+                font-size: 1.5vw;
+                margin: 2vw;
+            }
+            .result a {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>THE BEST LINK SHORTNER EVER MADE USING PURE GOLANG</h2>
+        <input placeholder="Your link" id="url">
+        <input onclick="getMyFinglink()" type="submit" value="Shorten">
+        <div class="result" id="resBox">
+        </div>
+        <div class="footer">
+            <p>Design by <a href="">Simple code</a></p>
+        </div>
+        <script>
+            async function getMyFinglink() {
+                linkURL = document.getElementById('url').value;
+                resultBlock = document.getElementById("resBox");
+                let response = await fetch('/addlink', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type' : 'text/plain; charset=UTF-8'
+                    },
+                    body: linkURL
+                });
+                let result = await response;
+                
+                if(result.status == 200) {
+                    result.body.getReader().read().then(({done,value}) => {
+                        resultString = new TextDecoder("utf-8").decode(value);
+                        linkElement = document.createElement('a');
+                        linkElement.href = resultString;
+                        linkElement.innerText = resultString;
+                        resultBlock.innerHTML = "";
+                        resultBlock.appendChild(linkElement);
+                    });
+                } else {
+                    result.body.getReader().read().then(({done,value}) =>  {
+                        resultString = new TextDecoder("utf-8").decode(value);
+                        resultBlock.innerText = resultString;
+                    });
+                }  
+            }
+        </script>
+    </body>
+</html>
