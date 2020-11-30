@@ -26,14 +26,21 @@ func initDB()  {
 	_, err = db.Exec("CREATE TABLE links (url VARCHAR(1000), newurl VARCHAR(12) PRIMARY KEY)")
 	checkErr(err)
 }
-
+func determineListenAddress() (string, error) {
+  port := os.Getenv("PORT")
+  if port == "" {
+    return "", fmt.Errorf("$PORT not set")
+  }
+  return ":" + port, nil
+}
 func main() {
 	//adding one general handler func, that will halndle all the requests
 	http.HandleFunc("/", GeneralHandler)
 	//adding serving static files
 	http.Handle("/public", http.FileServer(http.Dir("/public")))
 	//starting server
-	http.ListenAndServe(os.Getenv("PORT"), nil)
+	port, _ := determineListenAddress
+	http.ListenAndServe(port, nil)
 }
 
 // GeneralHandler : our main handler function. If it recives an GET request - it's cheking http request url and returning home.html
