@@ -39,7 +39,7 @@ func main() {
 	//adding serving static files
 	http.Handle("/public", http.FileServer(http.Dir("/public")))
 	//starting server
-	port, _ := determineListenAddress
+	port, _ := determineListenAddress()
 	http.ListenAndServe(port, nil)
 }
 
