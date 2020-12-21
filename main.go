@@ -17,13 +17,7 @@ import (
 
 //seting connection string to our DB as constant
 const connString = "host=ec2-54-246-85-151.eu-west-1.compute.amazonaws.com port=5432 user=vkhigwjgxhwbae password=8a7d1118066f00102847c6c5f63592e5d6473379cedbf2d8f02a55b62574a03a dbname=dbdj0dvlvt57dh sslmode=disable"
-func determineListenAddress() (string) {
-  port := os.Getenv("PORT")
-  if port == "" {
-    return ""
-  }
-  return ":" + port
-}
+
 func initDB()  {
 	db, err := sql.Open("postgres",connString)
 	checkErr(err)
@@ -34,13 +28,13 @@ func initDB()  {
 }
 
 func main() {
-	port := os.Getenv("PORT")
+	port := fmt.Sprintf(":%s",os.Getenv("PORT"))
 	os.Hostname()
 	http.HandleFunc("/", GeneralHandler)
 	//adding serving static files
 	http.Handle("/public", http.FileServer(http.Dir("/public")))
 	//starting server
-	http.ListenAndServe(determineListenAddress(), nil)
+	http.ListenAndServe(port, nil)
 }
 
 // GeneralHandler : our main handler function. If it recives an GET request - it's cheking http request url and returning home.html
