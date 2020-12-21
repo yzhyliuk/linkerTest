@@ -28,7 +28,7 @@ func initDB()  {
 }
 
 func main() {
-	port, _ := os.Hostname()
+	port := os.Getenv("PORT")
 	os.Hostname()
 	http.HandleFunc("/", GeneralHandler)
 	//adding serving static files
