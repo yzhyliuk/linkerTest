@@ -20,7 +20,7 @@ const connString = "host=ec2-54-246-85-151.eu-west-1.compute.amazonaws.com port=
 func determineListenAddress() (string) {
   port := os.Getenv("PORT")
   if port == "" {
-    return "", fmt.Errorf("$PORT not set")
+    return ""
   }
   return ":" + port
 }
